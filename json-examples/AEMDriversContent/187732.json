@@ -1,0 +1,152 @@
+{
+   "MethodCalled": "<!-- methodcalled name=\"getDownloadDetails\" date=\"2026-04-21T21:58:10+0000\" %7B%22ddID%22:%22187732%22%7D ResponseStatus=\"Success 200\" -->",
+   "ParsedParams": "<!--theDownloadID:187732 proxyUrl:https://gfwsl.geforce.com/services_toolkit/services/com/nvidia/services/AjaxDriverService.php?func=GetDownloadDetails&downloadID=187732 -->",
+   "GfeCampaignXmlContent": null,
+   "criteria": {
+      "overallState": "true",
+      "ddID": "187732",
+      "proxyUrl": "https://gfwsl.geforce.com/services_toolkit/services/com/nvidia/services/AjaxDriverService.php?func=GetDownloadDetails&downloadID=187732"
+      },
+   "driverDetails": {
+      "Success": "1",
+      "IDS": [{"downloadInfo": {
+         "Success": "1",
+         "ID": "187732",
+         "DownloadTypeID": "1",
+         "DownloadStatusID": "3",
+         "Name": "GeForce%20Game%20Ready%20Driver",
+         "NameLocalized": "GeForce%20Game%20Ready%20Driver",
+         "ShortDescription": "GeForce%20Game%20Ready%20Driver",
+         "DeviceToProductFamilyName": "",
+         "Release": "510",
+         "Version": "512.59",
+         "DisplayVersion": "",
+         "GFE_DisplayVersion": "3.25.0.84",
+         "CDKitUSBEmitterDriverVersion": "",
+         "CDKitGPUDriverVersion": "",
+         "IsBeta": "0",
+         "IsWHQL": "1",
+         "IsRecommended": "0",
+         "IsFeaturePreview": "0",
+         "IsNewest": "0",
+         "IsDC": "1",
+         "IsCRD": "0",
+         "HasNetInst": "0",
+         "CudaToolkitVersion": "",
+         "IsArchive": "0",
+         "IsActive": "1",
+         "IsEmailRequired": "0",
+         "ReleaseDateTime": "Tue Apr 26, 2022",
+         "DetailsURL": "http://www.nvidia.co.uk/Download/driverResults.aspx/187732/en-uk",
+         "DownloadURL": "https://uk.download.nvidia.com/Windows/512.59/512.59-desktop-win10-win11-64bit-international-dch-whql.exe",
+         "EMAN_REVRES_BD": "91-lqssm-lswfg-b2wsu-drp",
+         "EMITR_BD": "memCache:1%20rTime:2%20sTime:1",
+         "DownloadURLFileSize": "823.44 MB",
+         "BannerURL": "",
+         "BannerURLGfe": "https://www.nvidia.com/en-gb/geforce/billboards/displaydriver/gfe/eve-gfe-generic-banners/",
+         "ReleaseNotes": "Game%20Ready%20Drivers%20provide%20the%20best%20possible%20gaming%20experience%20for%20all%20major%20new%20releases.%20Prior%20to%20a%20new%20title%20launching%2C%20our%20driver%20team%20is%20working%20up%20until%20the%20last%20minute%20to%20ensure%20every%20performance%20tweak%20and%20bug%20fix%20is%20included%20for%20the%20best%20gameplay%20on%20day-1.%3Cbr%20/%3E%3Cbr%20/%3E%3Cstrong%3EGame%20Ready%20for%20Dune%3A%20Spice%20Wars%3C/strong%3E%3Cbr%20/%3E%3Cbr%20/%3EThis%20new%20Game%20Ready%20Driver%20provides%20the%20best%20day-0%20gaming%20experience%20for%20Dune%3A%20Spice%20Wars.%20In%20addition%2C%20this%20new%20Game%20Ready%20Driver%20offers%20support%20for%20the%20latest%20releases%20and%20updates%20including%20Chernobylite%26rsquo%3Bs%20introduction%20of%20ray%20tracing%2C%20the%20addition%20of%20NVIDIA%20DLSS%20to%20JX3%20Online%2C%20and%20the%20early%20access%20launch%20of%20Vampire%3A%20The%20Masquerade%20-%20Bloodhunt.%3Cbr%20/%3E%3Cbr%20/%3E%3Ca%20href%3D%22https%3A//www.nvidia.com/en-us/geforce/news/dune-spice-wars-game-ready-driver/%22%3ELearn%20more%20in%20our%20Game%20Ready%20Driver%20article%20here.%3C/a%3E",
+         "OtherNotes": "Effective%20October%202021%2C%20Game%20Ready%20Driver%20upgrades%2C%20including%20performance%20enhancements%2C%20new%20features%2C%20and%20bug%20fixes%2C%20will%20be%20available%20for%20systems%20utilizing%20Maxwell%2C%20Pascal%2C%20Turing%2C%20and%20Ampere-series%20GPUs.%20Critical%20security%20updates%20will%20be%20available%20on%20systems%20utilizing%20desktop%20Kepler-series%20GPUs%20through%20September%202024.%20A%20complete%20list%20of%20desktop%20Kepler-series%20GeForce%20GPUs%20can%20be%20found%20%3Ca%20href%3D%22https%3A//nvidia.custhelp.com/app/answers/detail/a_id/5202/kw/kepler%2520support%22%3Ehere%3C/a%3E.%3Cbr%20/%3E%0D%0A%3Cbr%20/%3E%0D%0A%3Cul%3E%0D%0A%20%20%3Cli%3E%3Ca%20href%3D%22https%3A//uk.download.nvidia.com/Windows/512.59/512.59-win11-win10-release-notes.pdf%22%20title%3D%22Game%20Ready%20Driver%20Release%20Notes%20v512.59%22%3EGame%20Ready%20Driver%20Release%20Notes%20%28v512.59%29%3C/a%3E%3C/li%3E%0D%0A%20%20%3Cli%3E%3Ca%20href%3D%22https%3A//uk.download.nvidia.com/Windows/512.59/512.59-nvidia-control-panel-quick-start-guide.pdf%22%20title%3D%22Control%20Panel%20User%27s%20Guide%22%3EControl%20Panel%20User%27s%20Guide%3C/a%3E%20%3C/li%3E%0D%0A%3C/ul%3E%0D%0A",
+         "InstallationNotes": "",
+         "Overview": "",
+         "LanguageName": "Hungarian",
+         "OSName": "Windows%2011",
+         "OsCode": "10.0",
+         "OSList": [
+            {
+            "OSName": "Windows%2010%2064-bit",
+            "OsCode": "10.0"
+            },
+            {
+            "OSName": "Windows%2011",
+            "OsCode": "10.0"
+            }
+         ],
+         "Is64Bit": "1",
+         "Messaging": [{
+            "MessageCode": "DownloadIDDetailsFound",
+            "MessageValue": "The Driver DownloadID details found"
+            }],
+         "series": [
+            {
+            "seriesname": "GeForce%20RTX%2030%20Series",
+            "products": [
+               {"productName": "GeForce%20RTX%203090%20Ti"},
+               {"productName": "GeForce%20RTX%203090"},
+               {"productName": "GeForce%20RTX%203080%20Ti"},
+               {"productName": "GeForce%20RTX%203080"},
+               {"productName": "GeForce%20RTX%203070%20Ti"},
+               {"productName": "GeForce%20RTX%203070"},
+               {"productName": "GeForce%20RTX%203060%20Ti"},
+               {"productName": "GeForce%20RTX%203060"},
+               {"productName": "GeForce%20RTX%203050"}
+            ]
+            },
+            {
+            "seriesname": "GeForce%20RTX%2020%20Series",
+            "products": [
+               {"productName": "GeForce%20RTX%202080%20Ti"},
+               {"productName": "GeForce%20RTX%202080%20SUPER"},
+               {"productName": "GeForce%20RTX%202080"},
+               {"productName": "GeForce%20RTX%202070%20SUPER"},
+               {"productName": "GeForce%20RTX%202070"},
+               {"productName": "GeForce%20RTX%202060%20SUPER"},
+               {"productName": "GeForce%20RTX%202060"}
+            ]
+            },
+            {
+            "seriesname": "GeForce%2016%20Series",
+            "products": [
+               {"productName": "GeForce%20GTX%201660%20SUPER"},
+               {"productName": "GeForce%20GTX%201650%20SUPER"},
+               {"productName": "GeForce%20GTX%201660%20Ti"},
+               {"productName": "GeForce%20GTX%201660"},
+               {"productName": "GeForce%20GTX%201650"}
+            ]
+            },
+            {
+            "seriesname": "GeForce%2010%20Series",
+            "products": [
+               {"productName": "GeForce%20GTX%201080%20Ti"},
+               {"productName": "GeForce%20GTX%201080"},
+               {"productName": "GeForce%20GTX%201070%20Ti"},
+               {"productName": "GeForce%20GTX%201070"},
+               {"productName": "GeForce%20GTX%201060"},
+               {"productName": "GeForce%20GTX%201050%20Ti"},
+               {"productName": "GeForce%20GTX%201050"},
+               {"productName": "GeForce%20GT%201030"},
+               {"productName": "GeForce%20GT%201010"}
+            ]
+            },
+            {
+            "seriesname": "GeForce%20900%20Series",
+            "products": [
+               {"productName": "GeForce%20GTX%20980%20Ti"},
+               {"productName": "GeForce%20GTX%20980"},
+               {"productName": "GeForce%20GTX%20970"},
+               {"productName": "GeForce%20GTX%20960"},
+               {"productName": "GeForce%20GTX%20950"}
+            ]
+            },
+            {
+            "seriesname": "GeForce%20700%20Series",
+            "products": [
+               {"productName": "GeForce%20GTX%20750%20Ti"},
+               {"productName": "GeForce%20GTX%20750"},
+               {"productName": "GeForce%20GTX%20745"}
+            ]
+            },
+            {
+            "seriesname": "NVIDIA%20TITAN%20Series",
+            "products": [
+               {"productName": "NVIDIA%20TITAN%20RTX"},
+               {"productName": "NVIDIA%20TITAN%20V"},
+               {"productName": "NVIDIA%20TITAN%20Xp"},
+               {"productName": "NVIDIA%20TITAN%20X%20(Pascal)"},
+               {"productName": "GeForce%20GTX%20TITAN%20X"}
+            ]
+            }
+         ]
+         }}]
+      },
+   "evaluatedPaths": []
+   }

@@ -1,0 +1,32 @@
+{
+   "MethodCalled": "<!-- methodcalled name=\"getDownloadDetails\" date=\"2026-04-21T21:58:43+0000\" #%22ddID%22:%22-1%22# ResponseStatus=\"Success 200\" -->",
+   "ParsedParams": "<!--theDownloadID:-1 proxyUrl:https://gfwsl.geforce.com/services_toolkit/services/com/nvidia/services/AjaxDriverService.php?func=GetDownloadDetails&downloadID=-1 -->",
+   "GfeCampaignXmlContent": null,
+   "criteria": {
+      "overallState": "true",
+      "ddID": "-1",
+      "proxyUrl": "https://gfwsl.geforce.com/services_toolkit/services/com/nvidia/services/AjaxDriverService.php?func=GetDownloadDetails&downloadID=-1"
+      },
+   "driverDetails": {
+      "Success": "0",
+      "IDS": [
+         {"downloadInfo": {
+         "Success": "0",
+         "ID": "",
+         "Messaging": [{
+            "MessageCode": "MalformedDownloadID",
+            "MessageValue": "en_US The Driver DownloadID requested is non numeric or null"
+            }]
+         }},
+         {"downloadInfo": {
+         "Success": "0",
+         "ID": "1",
+         "Messaging": [{
+            "MessageCode": "DownloadIDNotFound",
+            "MessageValue": "The Driver Download Requested was not found"
+            }]
+         }}
+      ]
+      },
+   "evaluatedPaths": []
+   }

@@ -1,0 +1,17 @@
+{
+  "name": "nvidia-driver-database",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Node.js crawler and query index for NVIDIA driver download IDs",
+  "main": "app.js",
+  "scripts": {
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.9.0",
+    "es6-promise-pool": "^2.5.0"
+  }
+}

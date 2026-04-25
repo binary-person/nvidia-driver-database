@@ -1,0 +1,192 @@
+{
+   "MethodCalled": "<!-- methodcalled name=\"getDownloadDetails\" date=\"2026-04-21T21:58:15+0000\" %7B%22ddID%22:%2218732%22%7D ResponseStatus=\"Success 200\" -->",
+   "ParsedParams": "<!--theDownloadID:18732 proxyUrl:https://gfwsl.geforce.com/services_toolkit/services/com/nvidia/services/AjaxDriverService.php?func=GetDownloadDetails&downloadID=18732 -->",
+   "GfeCampaignXmlContent": null,
+   "criteria": {
+      "overallState": "true",
+      "ddID": "18732",
+      "proxyUrl": "https://gfwsl.geforce.com/services_toolkit/services/com/nvidia/services/AjaxDriverService.php?func=GetDownloadDetails&downloadID=18732"
+      },
+   "driverDetails": {
+      "Success": "1",
+      "IDS": [{"downloadInfo": {
+         "Success": "1",
+         "ID": "18732",
+         "DownloadTypeID": "1",
+         "DownloadStatusID": "3",
+         "Name": "Verde%20Notebook%20Release%20197",
+         "NameLocalized": "Verde%20Notebook%20Release%20197",
+         "ShortDescription": "Verde%20Notebook%20Release%20197",
+         "DeviceToProductFamilyName": "",
+         "Release": "197",
+         "Version": "197.16",
+         "DisplayVersion": "",
+         "GFE_DisplayVersion": "",
+         "CDKitUSBEmitterDriverVersion": "",
+         "CDKitGPUDriverVersion": "",
+         "IsBeta": "0",
+         "IsWHQL": "1",
+         "IsRecommended": "0",
+         "IsFeaturePreview": "0",
+         "IsNewest": "0",
+         "IsDC": "0",
+         "IsCRD": "0",
+         "HasNetInst": "0",
+         "CudaToolkitVersion": "",
+         "IsArchive": "0",
+         "IsActive": "1",
+         "IsEmailRequired": "0",
+         "ReleaseDateTime": "Mon Mar 29, 2010",
+         "DetailsURL": "http://www.nvidia.co.jp/Download/driverResults.aspx/18732/jp",
+         "DownloadURL": "http://jp.download.nvidia.com/Windows/197.16/197.16_notebook_winxp_32bit_international_whql.exe",
+         "EMAN_REVRES_BD": "21-lqssm-lswfg-b2wsu-drp",
+         "EMITR_BD": "memCache:1%20rTime:2%20sTime:0",
+         "DownloadURLFileSize": "111.41 MB",
+         "BannerURL": "",
+         "BannerURLGfe": "",
+         "ReleaseNotes": "%0D%0A%3Cp%3E%E3%81%93%E3%82%8C%E3%81%AF%E3%80%81%3Ca%20href%3D%26quot%3Bhttp%3A//www.nvidia.co.jp/object/notebook_drivers_jp.html%26quot%3B%20%20target%3D%26quot%3B_self%26quot%3B%3ENVIDIA%20Verde%E3%83%8E%E3%83%BC%E3%83%88%E3%83%96%E3%83%83%E3%82%AF%E3%83%89%E3%83%A9%E3%82%A4%E3%83%90%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%A0%3C/a%3E%E3%81%AE%E4%B8%80%E7%92%B0%E3%81%A8%E3%81%97%E3%81%A6%E3%80%81%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88%E3%81%95%E3%82%8C%E3%81%9FNVIDIA%E3%83%8E%E3%83%BC%E3%83%88%E3%83%96%E3%83%83%E3%82%AFGPU%E3%81%AB%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E5%8F%AF%E8%83%BD%E3%81%AA%E3%83%AA%E3%83%95%E3%82%A1%E3%83%AC%E3%83%B3%E3%82%B9%E3%83%89%E3%83%A9%E3%82%A4%E3%83%90%E3%81%A7%E3%81%99%E3%80%82%20%3Cbr%3E%0D%0A%20%20%E7%8F%BE%E5%9C%A8%E3%81%8A%E4%BD%BF%E3%81%84%E3%81%AE%E3%83%8E%E3%83%BC%E3%83%88%E3%83%96%E3%83%83%E3%82%AF%E3%83%A1%E3%83%BC%E3%82%AB%E3%83%BC%E3%81%AE%E3%83%9B%E3%83%BC%E3%83%A0%E3%83%9A%E3%83%BC%E3%82%B8%E4%B8%8A%E3%81%A7%E3%80%81%E8%A3%BD%E5%93%81%E5%90%91%E3%81%91%E8%AA%8D%E8%A8%BC%E3%83%89%E3%83%A9%E3%82%A4%E3%83%90%E3%81%8C%E6%8F%90%E4%BE%9B%E3%81%95%E3%82%8C%E3%81%A6%E3%81%84%E3%82%8B%E3%81%8B%E3%82%92%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%E3%81%BE%E3%81%9F%E3%80%81NVIDIA%E3%81%AF%E3%80%81%E7%8F%BE%E5%9C%A8%E3%81%8A%E4%BD%BF%E3%81%84%E3%81%AE%20%E3%83%8E%E3%83%BC%E3%83%88%E3%83%96%E3%83%83%E3%82%AF%E3%81%AB%E6%8E%A8%E5%A5%A8%E3%81%95%E3%82%8C%E3%81%A6%E3%81%84%E3%82%8B%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E3%82%92%E3%80%81%E3%83%A1%E3%83%BC%E3%82%AB%E3%83%BC%E3%81%AB%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%84%E3%81%9F%E3%81%A0%E3%81%8F%E3%81%93%E3%81%A8%E3%82%92%E3%81%8A%E5%8B%A7%E3%82%81%E3%81%84%E3%81%9F%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%E3%81%AA%E3%81%8A%E3%80%81%E3%81%93%E3%81%AE%E3%83%89%E3%83%A9%E3%82%A4%E3%83%90%E3%81%AE%E4%BD%BF%E7%94%A8%E3%81%AB%E3%82%88%E3%81%A3%E3%81%A6%E8%B5%B7%E3%81%93%E3%82%8A%E5%BE%97%E3%82%8B%E5%95%8F%E9%A1%8C%E3%81%AB%E9%96%A2%E3%81%97%20%E3%81%A6%E3%80%81%E3%83%86%E3%82%AF%E3%83%8B%E3%82%AB%E3%83%AB%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88%E3%82%92%E6%8F%90%E4%BE%9B%E3%81%97%E3%81%A6%E3%81%84%E3%81%AA%E3%81%84OEM%E3%83%A1%E3%83%BC%E3%82%AB%E3%83%BC%E3%82%82%E3%81%82%E3%82%8A%E3%81%BE%E3%81%99%E3%80%82%20%3Cbr%3E%3Cbr%3E%0D%0A%20%20%3Cstrong%3E%E3%81%93%E3%81%AE%E3%83%89%E3%83%A9%E3%82%A4%E3%83%90%E3%82%92%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89%E3%81%99%E3%82%8B%E5%89%8D%E3%81%AB%3C/strong%3E%3Cstrong%3E%EF%BC%9A%3C/strong%3E%20%3C/p%3E%0D%0A%3Cul%20type%3D%26quot%3Bdisc%26quot%3B%3E%0D%0A%20%20%3Cli%3E%E3%81%8A%E4%BD%BF%E3%81%84%E3%81%AE%E3%83%8E%E3%83%BC%E3%83%88%E3%83%96%E3%83%83%20%E3%82%AF%E3%81%8CGPU%E3%81%AB%E5%AF%BE%E5%BF%9C%E3%81%97%E3%81%A6%E3%81%84%E3%82%8B%E3%81%8B%E3%80%81%20%E3%81%BE%E3%81%9F%E5%AF%BE%E8%B1%A1%E5%A4%96%E3%83%AA%E3%82%B9%E3%83%88%E3%81%AB%E8%A8%98%E8%BC%89%E3%81%95%E3%82%8C%E3%81%A6%E3%81%84%E3%81%AA%E3%81%84%E3%81%8B%E3%82%92%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%EF%BC%88%E4%BB%A5%E4%B8%8B%E3%81%AE%E8%A3%BD%E5%93%81%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88%E3%82%BF%E3%83%96%E3%82%88%E3%82%8A%E3%81%94%E7%A2%BA%E8%AA%8D%E3%81%84%E3%81%9F%E3%81%A0%E3%81%91%E3%81%BE%E3%81%99%EF%BC%89%E3%80%82%20%3C/li%3E%0D%0A%20%20%3Cli%3E%E7%8F%BE%E5%9C%A8%E3%81%AE%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E6%88%90%20%E3%81%AE%E3%83%90%E3%83%83%E3%82%AF%E3%82%A2%E3%83%83%E3%83%97%E3%82%92%E5%8F%96%E3%82%8B%E3%81%93%E3%81%A8%E3%82%92%E3%81%8A%E5%8B%A7%E3%82%81%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%3Ca%20href%3D%26quot%3Bhttp%3A//www.nvidia.co.jp/object/notebook_driver_instructions_jp.html%26quot%3B%3E%E3%83%90%E3%83%83%E3%82%AF%E3%82%A2%E3%83%83%E3%83%97%E6%96%B9%E6%B3%95%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%E3%81%AF%E3%81%93%E3%81%93%E3%82%92%E3%82%AF%E3%83%AA%E3%83%83%E3%82%AF%3C/a%3E%E3%80%82%20%3C/li%3E%0D%0A%20%20%3Cli%3EDell%20Inspiron%201420%E3%80%81Dell%20XPS%20M1330%E3%80%81Dell%20XPS%20M1530%E3%80%81Dell%20Latitude%20D630/D630c%E3%82%92%E3%81%8A%E6%8C%81%E3%81%A1%E3%81%AE%E6%96%B9%E3%81%AF%E3%80%81%E3%81%AF%20%E3%81%98%E3%82%81%E3%81%AB%E3%81%98%E3%82%81%E3%81%AB%3Ca%20href%3D%26quot%3Bhttp%3A//www.nvidia.com/object/recommended_software_updates.html%26quot%3B%3E%E3%81%93%E3%81%AEDell%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E3%82%A2%E3%83%83%E3%83%97%E3%83%87%E3%83%BC%E3%83%88%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%3C/a%3E%E3%82%92%E5%BC%B7%E3%81%8F%E3%81%8A%E5%8B%A7%E3%82%81%E3%81%97%E3%81%BE%20%E3%81%99%E3%80%82%20%3C/li%3E%0D%0A%3C/ul%3E%0D%0A%3Cp%3E%E3%81%93%E3%81%AE%E3%83%89%E3%83%A9%E3%82%A4%E3%83%90%E3%81%AF%E3%80%81%E6%AC%A1%E3%81%AENVIDIA%20GPU%E3%82%92%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88%E3%81%97%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%28%E4%BE%8B%E5%A4%96%E3%81%A8%E3%81%AA%E3%82%8B%E3%82%82%E3%81%AE%E3%82%82%E3%81%82%E3%82%8A%E3%81%BE%E3%81%99%E3%81%AE%E3%81%A7%E3%80%81%E5%AF%BE%E5%BF%9C%E8%A3%BD%E5%93%81%E3%82%BF%E3%83%96%E3%82%92%E3%81%94%E8%A6%A7%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%29%EF%BC%9A%20%3C/p%3E%0D%0A%3Cul%3E%0D%0A%20%20%3Cli%3EION%20%E3%83%8E%E3%83%BC%E3%83%88%E3%83%96%E3%83%83%E3%82%AFGPU%E3%80%82%20%3C/li%3E%0D%0A%20%20%3Cli%3EGeForce%208M%E3%80%819M%E3%80%81100M%E3%80%81200M%E3%80%81300M%E3%82%B7%E3%83%AA%E3%83%BC%E3%82%BA%E3%83%8E%E3%83%BC%E3%83%88%E3%83%96%E3%83%83%E3%82%AFGPU%E3%80%82%20%3C/li%3E%0D%0A%20%20%3Cli%3EDiretX%2010%E3%80%81%E3%81%82%E3%82%8B%E3%81%84%E3%81%AF%E3%81%9D%E3%82%8C%E4%BB%A5%E4%B8%8A%E3%82%92%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88%E3%81%97%E3%81%A6%E3%81%84%E3%82%8BQuadro%20NVS%E3%82%B7%E3%83%AA%E3%83%BC%E3%82%BA%E3%83%8E%E3%83%BC%E3%83%88%E3%83%96%E3%83%83%E3%82%AFGPU%E3%80%82%20%3C/li%3E%0D%0A%20%20%3Cli%3EDirectX%2010%E3%80%81%E3%81%82%E3%82%8B%E3%81%84%E3%81%AF%E3%81%9D%E3%82%8C%E4%BB%A5%E4%B8%8A%E3%82%92%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88%E3%81%97%E3%81%A6%E3%81%84%E3%82%8BQuadro%20FX%E3%82%B7%E3%83%AA%E3%83%BC%E3%82%BA%E3%83%8E%E3%83%BC%E3%83%88%E3%83%96%E3%83%83%E3%82%AFGPU%E3%80%82%20%3C/li%3E%0D%0A%3C/ul%3E%0D%0A%3Cp%3E%3Cstrong%3E%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%3C/strong%3E%3Cstrong%3E197.16%3C/strong%3E%3Cstrong%3E%E6%9B%B4%E6%96%B0%3C/strong%3E%3Cstrong%3E%3A%3C/strong%3E%0D%0A%3C/p%3E%0D%0A%3Cul%3E%0D%0A%20%20%3Cli%3EAssassin%20Creed%20II%E3%80%81Avatar%E3%80%81Battlefield%3ABad%20Company%202%E3%80%81Command%20and%20Conquer%204%3A%20Tiberium%20Twilight%E3%80%81Dirt%202%E3%80%81Mass%20Effect%202%E3%80%81Metro%202033%E3%80%81Napoleon%3ATotal%20War%E3%80%81Supreme%20Commander%202%E3%80%81World%20of%20Warcraft%E3%80%81%E3%81%AA%E3%81%A9%E6%96%B0%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E7%94%A8SLI%20%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88%E3%81%AE%E8%BF%BD%E5%8A%A0%E3%81%8A%E3%82%88%E3%81%B3%E6%94%B9%E5%96%84%E3%80%82%20%3C/li%3E%0D%0A%20%20%3Cli%3E%0D%0A%20%20%20%20%3Ca%20href%3D%26quot%3Bhttp%3A//www.nzone.com/object/nzone_darkvoid_home.html%26quot%3B%20target%3D%26quot%3B_blank%26quot%3B%3EDark%20%20Void%3C/a%3E%0D%0A%20%20%20%20%E3%81%AE%E3%82%88%E3%81%86%E3%81%AA%E6%96%B0PhysX%20%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E7%94%A8%26nbsp%3B%20%209.10.0129%20%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E3%81%AEPhysX%20%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%83%81%E3%82%A7%E3%82%A2%E3%81%AE%E3%82%A2%E3%83%83%E3%83%97%E3%83%87%E3%83%BC%E3%83%88%E3%80%82%20%3C/li%3E%0D%0A%20%20%3Cli%3EHD%E3%82%AA%E3%83%BC%E3%83%87%E3%82%A3%E3%82%AA%E3%83%89%E3%83%A9%E3%82%A4%E3%83%90%E3%82%92%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B31.0.9.1%E3%81%AB%E6%9B%B4%E6%96%B0%20%28%E5%AF%BE%E5%BF%9CGPU%E7%94%A8%29%20%E3%80%82%20%3C/li%3E%0D%0A%20%20%3Cli%3E%E6%95%B0%E3%80%85%E3%81%AE%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3195.62%20WHQL%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%81%A7%E3%81%AE%E3%83%91%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%B3%E3%82%B9%E3%82%92%E5%90%91%E4%B8%8A%E3%80%82%E6%94%B9%E5%96%84%E5%80%A4%E4%BE%8B%E3%81%AF%E6%AC%A1%E3%81%AE%E9%80%9A%E3%82%8A%E3%80%82%E7%B5%90%E6%9E%9C%E3%81%AF%E3%80%81%E3%81%94%E4%BD%BF%E7%94%A8%E3%81%AEGPU%E3%82%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E6%88%90%E3%81%AB%E3%82%88%E3%82%8A%E3%80%81%E7%95%B0%E3%81%AA%E3%82%8B%E3%81%93%E3%81%A8%E3%81%8C%E3%81%82%E3%82%8A%E3%81%BE%E3%81%99%EF%BC%9A%20%3C/li%3E%0D%0A%3C/ul%3E%0D%0A%3Cul%20type%3D%26quot%3Bdisc%26quot%3B%3E%0D%0A%20%20%3Cul%20type%3D%26quot%3Bcircle%26quot%3B%3E%0D%0A%20%20%20%20%3Cli%3ECrysis%3A%20Warhead%E3%81%A7%E3%81%AF%E3%80%81%E3%82%B7%E3%83%B3%E3%82%B0%E3%83%ABGPU%E4%BD%BF%E7%94%A8%E3%81%AB%E3%82%88%E3%82%8A%E3%80%81%E6%9C%80%E5%A4%A713%25%E3%81%AE%E3%83%91%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%B3%E3%82%B9%E3%81%8C%E5%90%91%E4%B8%8A%20%3C/li%3E%0D%0A%20%20%20%20%3Cli%3E%26nbsp%3B%20Crysis%3A%20Warhead%E3%81%A7%E3%81%AF%E3%80%81SLI%E3%83%86%E3%82%AF%E3%83%8E%E3%83%AD%E3%82%B8%E4%BD%BF%E7%94%A8%E3%81%AB%E3%82%88%E3%82%8A%E3%80%81%E6%9C%80%E5%A4%A730%25%E3%81%AE%E3%83%91%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%B3%E3%82%B9%E3%81%8C%E5%90%91%E4%B8%8A%20%3C/li%3E%0D%0A%20%20%20%20%3Cli%3EH.A.W.X%E3%81%A7%E3%81%AF%E3%80%81%E3%82%B7%E3%83%B3%E3%82%B0%E3%83%ABGPU%E4%BD%BF%E7%94%A8%E3%81%AB%E3%82%88%E3%82%8A%E3%80%81%E6%9C%80%E5%A4%A713%25%E3%81%AE%E3%83%91%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%B3%E3%82%B9%E3%81%8C%E5%90%91%E4%B8%8A%20%3C/li%3E%0D%0A%20%20%20%20%3Cli%3EH.A.W.X%E3%81%A7%E3%81%AF%E3%80%81SLI%E3%83%86%E3%82%AF%E3%83%8E%E3%83%AD%E3%82%B8%E4%BD%BF%E7%94%A8%E3%81%AB%E3%82%88%E3%82%8A%E3%80%81%E6%9C%80%E5%A4%A715%25%E3%81%AE%E3%83%91%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%B3%E3%82%B9%E3%81%8C%E5%90%91%E4%B8%8A%20%3C/li%3E%0D%0A%20%20%20%20%3Cli%3ELeft%204%20Dead%E3%81%A7%E3%81%AF%E3%80%81%E3%82%B7%E3%83%B3%E3%82%B0%E3%83%ABGPU%E4%BD%BF%E7%94%A8%E3%81%AB%E3%82%88%E3%82%8A%E3%80%81%E6%9C%80%E5%A4%A730%25%E3%81%AE%E3%83%91%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%B3%E3%82%B9%E3%81%8C%E5%90%91%E4%B8%8A%20%3C/li%3E%0D%0A%20%20%20%20%3Cli%3ELeft%204%20Dead%E3%81%A7%E3%81%AF%E3%80%81SLI%E3%83%86%E3%82%AF%E3%83%8E%E3%83%AD%E4%BD%BF%E7%94%A8%E3%81%AB%E3%82%88%E3%82%8A%E3%80%81%E6%9C%80%E5%A4%A728%25%E3%81%AE%E3%83%91%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%B3%E3%82%B9%E3%81%8C%E5%90%91%E4%B8%8A%20%3C/li%3E%0D%0A%20%20%20%20%0D%0A%20%20%3C/ul%3E%0D%0A%3C/ul%3E%0D%0A%3Cul%3E%0D%0A%20%20%3Cli%3E%E5%A4%9A%E6%95%B0%E3%81%AE%E3%83%90%E3%82%B0%E3%81%AE%E4%BF%AE%E6%AD%A3%E3%80%82%E5%90%8C%E3%83%AA%E3%83%AA%E3%83%BC%E3%82%B9%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B%E4%B8%BB%E3%81%AA%E3%83%90%E3%82%B0%E3%81%AE%E4%BF%AE%E6%AD%A3%E3%81%AB%E9%96%A2%E3%81%97%E3%81%A6%E3%81%AF%E3%80%81%E3%83%89%E3%82%AD%E3%83%A5%E3%83%A1%E3%83%B3%E3%83%86%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%82%BF%E3%83%96%E5%86%85%E3%81%AE%E3%83%AA%E3%83%AA%E3%83%BC%E3%82%B9%E3%83%8E%E3%83%BC%E3%83%88%E3%82%92%E3%81%94%E8%A6%A7%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%20%3C/li%3E%0D%0A%3C/ul%3E%0D%0A%3Cp%3E%3Cstrong%3E%E6%97%A2%E5%AD%98%E3%81%AE%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88%3C/strong%3E%3Cstrong%3E%3A%3C/strong%3E%0D%0A%3C/p%3E%0D%0A%3Cul%3E%0D%0A%20%20%3Cli%3E%E6%96%B0%20Adobe%20Flash%2010.1%20%E3%83%99%E3%83%BC%E3%82%BF%E7%89%88%E3%81%8C%E3%82%82%E3%81%9F%E3%82%89%E3%81%99%E6%BB%91%E3%82%89%E3%81%8B%E3%81%AA%E3%82%AA%E3%83%B3%E3%83%A9%E3%82%A4%E3%83%B3%E9%AB%98%E7%94%BB%E8%B3%AA%E3%83%93%E3%83%87%E3%82%AA%E7%94%A8GPU%E3%82%A2%E3%82%AF%E3%82%BB%E3%83%A9%E3%83%AC%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%81%AE%E8%BF%BD%E5%8A%A0%E3%80%82%20%E8%A9%B3%E7%B4%B0%E3%81%AF%0D%0A%20%20%20%20%20%20%3Ca%20href%3D%26quot%3Bhttp%3A//www.nvidia.co.jp/object/adobe_flashplayer_plus_nvidia_jp.html%26quot%3B%20target%3D%26quot%3B_blank%26quot%3B%3E%E3%81%93%E3%81%A1%E3%82%89%3C/a%3E%0D%0A%20%20%20%20%E3%80%82%20%3C/li%3E%0D%0A%20%20%3Cli%3EOpenGL%203.2%20%E7%94%A8%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88%E3%81%AE%E8%BF%BD%E5%8A%A0%E3%80%82%20%3C/li%3E%0D%0A%20%20%3Cli%3EOpenCL%201.0%20%28%0D%0A%20%20%20%20%20%20%3Ca%20href%3D%26quot%3Bhttp%3A//www.nvidia.co.jp/object/cuda_opencl_jp.html%26quot%3B%20target%3D%26quot%3B_blank%26quot%3B%3EOpen%20%20Computing%20Language%3C/a%3E%0D%0A%20%20%20%20%29%20%E7%94%A8%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88%E3%81%AE%E8%BF%BD%E5%8A%A0%E3%80%82%20%3C/li%3E%0D%0A%20%20%3Cli%3ECUDA%20Toolkit%203.0%20%E7%89%B9%E5%BE%B4%E3%81%8A%E3%82%88%E3%81%B3%E3%83%91%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%B3%E3%82%B9%E7%94%A8%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88%E3%81%AE%E8%BF%BD%E5%8A%A0%E3%80%82%E8%A9%B3%E7%B4%B0%E3%81%AF%E3%81%93%E3%81%A1%E3%82%89%E3%80%81%0D%0A%20%20%20%20%20%20%3Ca%20href%3D%26quot%3Bhttps%3A//owa.nvidia.com/exchweb/bin/redir.asp%3FURL%3Dhttp%3A//www.nvidia.com/cuda%26quot%3B%20target%3D%26quot%3B_blank%26quot%3B%3ECUDA%20Zone%3C/a%3E%0D%0A%20%20%20%20%E3%82%92%E3%81%94%E8%A6%A7%E4%B8%8B%E3%81%95%E3%81%84%E3%80%82%20%3C/li%3E%0D%0A%20%20%3Cli%3E%E6%9C%80%E4%BD%8E256MB%E3%81%AE%E5%B0%82%E7%94%A8%E3%82%B0%E3%83%A9%E3%83%95%E3%82%A3%E3%83%83%E3%82%AF%E3%82%B9%E3%83%A1%E3%83%A2%E3%83%AA%E3%81%A832%E3%83%97%E3%83%AD%E3%82%BB%E3%83%83%E3%82%B7%E3%83%B3%E3%82%B0%E3%82%B3%E3%82%A2%E3%82%92%E5%82%99%E3%81%88%E3%81%9FGPU%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B%3Cu%3E%0D%0A%20%20%20%20%3Ca%20href%3D%26quot%3Bhttp%3A//www.nvidia.co.jp/physx%26quot%3B%3ENVIDIA%20PhysX%3C/a%3E%0D%0A%20%20%3C/u%3E%E3%83%8F%E3%83%BC%E3%83%89%E3%82%A6%E3%82%A7%E3%82%A2%E3%82%A2%E3%82%AF%E3%82%BB%E3%83%A9%E3%83%AC%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%81%AB%E5%AF%BE%E5%BF%9C%E3%80%82%20%3C/li%3E%0D%0A%20%20%3Cli%3E%E3%81%93%E3%81%AE%E3%83%89%E3%83%A9%E3%82%A4%E3%83%90%E3%81%AFDirectX9%20%2C%E3%81%8A%E3%82%88%E3%81%B3OpenGL%E4%B8%8A%E3%81%A7%E3%82%B7%E3%83%B3%E3%82%B0%E3%83%ABGPU%E3%80%81%0D%0A%3Ca%20href%3D%26quot%3Bhttp%3A//jp.slizone.com/page/home.html%26quot%3B%20target%3D%26quot%3B_blank%26quot%3B%3ENVIDIA%20%20SLI%E2%84%A2%20%E3%83%A2%E3%83%BC%E3%83%89%E3%82%92%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88%E3%81%84%E3%81%9F%E3%81%97%E3%81%BE%E3%81%99%3C/a%3E%0D%0A%E3%80%82%3C/li%3E%0D%0A%3C/ul%3E%0D%0A%0D%0A%0D%0A",
+         "OtherNotes": "%0D%0A%0D%0A%3Cp%3E%0D%0A%3C%21--%3Cli%3E%3CA%20Href%3D%26quot%3Bhttp%3A//us.download.nvidia.com/Windows/197.16/197.16_WinXP_Release_Notes.pdf%26quot%3B%3ERelease%20Notes%20%28v197.16%29%3C/A%3E%3CBR%3E%3C/li%3E--%3E%0D%0A%20%20%26bull%3B%26nbsp%3B%3CA%20Href%3D%26quot%3Bhttp%3A//jp.download.nvidia.com/Windows/197.16/197.16_WinXP_Notebook_Release_Notes.pdf%26quot%3B%3E%E3%83%AA%E3%83%AA%E3%83%BC%E3%82%B9%E3%83%8E%E3%83%BC%E3%83%88%20-%20%28v197.16%29%3C/A%3E%3CBR%3E%0D%0A%20%20%26bull%3B%26nbsp%3B%3CA%20Href%3D%26quot%3Bhttp%3A//jp.download.nvidia.com/Windows/197.16/197.16_NVIDIA_Control_Panel_Quick_Start_Guide.pdf%26quot%3B%3EControl%20Panel%20User%26quot%3Bs%20Guide%3C/A%3E%20%0D%0A%3C/p%3E%0D%0A%0D%0A%0D%0A",
+         "InstallationNotes": "",
+         "Overview": "",
+         "LanguageName": "Japanese",
+         "OSName": "Windows%20XP",
+         "OsCode": "5.1",
+         "OSList": [{
+            "OSName": "Windows%20XP",
+            "OsCode": "5.1"
+            }],
+         "Is64Bit": "0",
+         "Messaging": [{
+            "MessageCode": "DownloadIDDetailsFound",
+            "MessageValue": "The Driver DownloadID details found"
+            }],
+         "series": [
+            {
+            "seriesname": "GeForce%20300M%20Series%20(Notebooks)",
+            "products": [
+               {"productName": "GeForce%20GTS%20360M"},
+               {"productName": "GeForce%20GTS%20350M"},
+               {"productName": "GeForce%20GT%20335M"},
+               {"productName": "GeForce%20GT%20330M"},
+               {"productName": "GeForce%20GT%20325M"},
+               {"productName": "GeForce%20310M"},
+               {"productName": "GeForce%20305M"}
+            ]
+            },
+            {
+            "seriesname": "GeForce%20200M%20Series%20(Notebooks)",
+            "products": [
+               {"productName": "GeForce%20GTX%20280M"},
+               {"productName": "GeForce%20GTX%20260M"},
+               {"productName": "GeForce%20GT%20240M"},
+               {"productName": "GeForce%20GT%20230M"},
+               {"productName": "GeForce%20GT%20220M"},
+               {"productName": "GeForce%20G210M"}
+            ]
+            },
+            {
+            "seriesname": "GeForce%20100M%20Series%20(Notebooks)",
+            "products": [
+               {"productName": "GeForce%20GTS%20160M"},
+               {"productName": "GeForce%20GT%20130M"},
+               {"productName": "GeForce%20GT%20120M"},
+               {"productName": "GeForce%20G%20110M"},
+               {"productName": "GeForce%20G%20105M"},
+               {"productName": "GeForce%20G%20103M"},
+               {"productName": "GeForce%20G%20102M"}
+            ]
+            },
+            {
+            "seriesname": "GeForce%209M%20Series%20(Notebooks)",
+            "products": [
+               {"productName": "GeForce%209800M%20GTX"},
+               {"productName": "GeForce%209800M%20GTS"},
+               {"productName": "GeForce%209800M%20GT"},
+               {"productName": "GeForce%209800M%20GS"},
+               {"productName": "GeForce%209700M%20GTS"},
+               {"productName": "GeForce%209700M%20GT"},
+               {"productName": "GeForce%209650M%20GT"},
+               {"productName": "GeForce%209650M%20GS"},
+               {"productName": "GeForce%209600M%20GT"},
+               {"productName": "GeForce%209600M%20GS"},
+               {"productName": "GeForce%209500M%20GS"},
+               {"productName": "GeForce%209500M%20G"},
+               {"productName": "GeForce%209400M%20G"},
+               {"productName": "GeForce%209400M"},
+               {"productName": "GeForce%209300M%20GS"},
+               {"productName": "GeForce%209300M%20G"},
+               {"productName": "GeForce%209200M%20GS"},
+               {"productName": "GeForce%209100M%20G"}
+            ]
+            },
+            {
+            "seriesname": "GeForce%208M%20Series%20(Notebooks)",
+            "products": [
+               {"productName": "GeForce%208800M%20GTX"},
+               {"productName": "GeForce%208800M%20GS"},
+               {"productName": "GeForce%208700M%20GT"},
+               {"productName": "GeForce%208600M%20GT"},
+               {"productName": "GeForce%208400M%20GT"},
+               {"productName": "GeForce%208400M%20GS"},
+               {"productName": "GeForce%208400M%20G"},
+               {"productName": "GeForce%208200M%20G"}
+            ]
+            },
+            {
+            "seriesname": "Quadro%20FX%20Series%20(Notebooks)",
+            "products": [
+               {"productName": "Quadro%20FX%203800M"},
+               {"productName": "Quadro%20FX%203700M"},
+               {"productName": "Quadro%20FX%203600M"},
+               {"productName": "Quadro%20FX%202800M"},
+               {"productName": "Quadro%20FX%202700M"},
+               {"productName": "Quadro%20FX%201800M"},
+               {"productName": "Quadro%20FX%201700M"},
+               {"productName": "Quadro%20FX%201600M"},
+               {"productName": "Quadro%20FX%20880M"},
+               {"productName": "Quadro%20FX%20770M"},
+               {"productName": "Quadro%20FX%20570M"},
+               {"productName": "Quadro%20FX%20380M"},
+               {"productName": "Quadro%20FX%20370M"},
+               {"productName": "Quadro%20FX%20360M"}
+            ]
+            },
+            {
+            "seriesname": "Quadro%20NVS%20Series%20(Notebooks)",
+            "products": [
+               {"productName": "NVS%205100M"},
+               {"productName": "NVS%203100M"},
+               {"productName": "Quadro%20NVS%20320M"},
+               {"productName": "Quadro%20NVS%20160M"},
+               {"productName": "Quadro%20NVS%20150M"},
+               {"productName": "Quadro%20NVS%20140M"},
+               {"productName": "Quadro%20NVS%20135M"},
+               {"productName": "Quadro%20NVS%20130M"}
+            ]
+            },
+            {
+            "seriesname": "NVS%20Series%20(Notebooks)",
+            "products": [
+               {"productName": "NVS%205100M"},
+               {"productName": "NVS%203100M"},
+               {"productName": "Quadro%20NVS%20320M"},
+               {"productName": "Quadro%20NVS%20160M"},
+               {"productName": "Quadro%20NVS%20150M"},
+               {"productName": "Quadro%20NVS%20140M"},
+               {"productName": "Quadro%20NVS%20135M"},
+               {"productName": "Quadro%20NVS%20130M"}
+            ]
+            },
+            {
+            "seriesname": "ION%20(Notebooks)",
+            "products": [{"productName": "ION"}]
+            },
+            {
+            "seriesname": "ION%20LE%20(Notebooks)",
+            "products": [{"productName": "ION%20LE"}]
+            }
+         ]
+         }}]
+      },
+   "evaluatedPaths": []
+   }

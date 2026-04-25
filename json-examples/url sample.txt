@@ -1,0 +1,6 @@
+wrapper: https://www.nvidia.com/services/com.nvidia.services/AEMDriversContent/getDownloadDetails?{%22ddID%22:%22265870%22}
+direct: https://gfwsl.geforce.com/services_toolkit/services/com/nvidia/services/AjaxDriverService.php?func=GetDownloadDetails&downloadID=131411
+
+https://www.nvidia.com/Download/API/lookupValueSearch.aspx?TypeID=1
+...
+https://www.nvidia.com/Download/API/lookupValueSearch.aspx?TypeID=6
