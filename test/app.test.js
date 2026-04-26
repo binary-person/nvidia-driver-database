@@ -157,6 +157,32 @@ function makeLookupEntry({
   };
 }
 
+function buildLookupValueSearchXml(entries) {
+  const blocks = entries.map((entry) => {
+    const attrs = [];
+    if (entry.parentValue) {
+      attrs.push(`ParentID="${entry.parentValue}"`);
+    }
+    if (entry.code) {
+      attrs.push(`Code="${entry.code}"`);
+    }
+    if (entry.requiresProduct) {
+      attrs.push(`RequiresProduct="${entry.requiresProduct}"`);
+    }
+    if (entry.isSelectLess) {
+      attrs.push(`IsSelectLess="${entry.isSelectLess}"`);
+    }
+    for (const [key, value] of Object.entries(entry.extraAttrs || {})) {
+      attrs.push(`${key}="${value}"`);
+    }
+
+    const attrText = attrs.length > 0 ? ` ${attrs.join(" ")}` : "";
+    return `<LookupValue${attrText}><Name>${entry.name}</Name><Value>${entry.value}</Value></LookupValue>`;
+  });
+
+  return `<LookupValueSearch><LookupValues>${blocks.join("")}</LookupValues></LookupValueSearch>`;
+}
+
 test("buildSummaryRecord decodes human-facing fields from a successful payload", async () => {
   const { payload } = await readExample("187732.json");
   const summary = buildSummaryRecord(payload);
@@ -466,6 +492,91 @@ test("replaceLookupValues preserves a richer TypeID 3 snapshot when a weaker reg
   assert.deepEqual(productNames, [
     "NVIDIA RTX PRO 4500 Blackwell Workstation Edition",
     "NVIDIA RTX PRO 5000 48GB Blackwell",
+  ]);
+});
+
+test("replaceLookupValues treats NVIDIA RTX PRO 4500 Blackwell Server Edition as equivalent to its canonical generic name during coverage checks", async () => {
+  const rootDir = await makeTempRoot();
+  const repository = await openRepository(rootDir);
+
+  try {
+    const productDefinition = LOOKUP_TYPE_DEFINITIONS.find((entry) => entry.typeId === 3);
+    const checkedAt = new Date().toISOString();
+
+    repository.persistFound({
+      id: "999100",
+      release: "595",
+      version: "595.45",
+      displayVersion: "595.45.04",
+      gfeDisplayVersion: "",
+      releaseDateTime: "Thu Mar 5, 2026",
+      osName: "Linux 64-bit",
+      osCode: "linux64",
+      languageName: "English (US)",
+      is64Bit: "1",
+      isWHQL: "0",
+      isRecommended: "1",
+      isDC: "0",
+      isCRD: "0",
+      isBeta: "0",
+      isFeaturePreview: "0",
+      downloadFileSize: "423.19 MB",
+      releaseNotes: "",
+      otherNotes: "",
+      name: "Data Center Driver for Linux",
+      detailsUrl: "https://www.nvidia.com/en-us/drivers/details/999100/",
+      downloadUrl: "https://us.download.nvidia.com/XFree86/Linux-x86_64/595.45.04/NVIDIA-Linux-x86_64-595.45.04.run",
+      seriesNames: ["RTX PRO Blackwell"],
+      productNames: ["NVIDIA RTX PRO 4500 Blackwell Server Edition"],
+    }, "{}", checkedAt);
+
+    repository.replaceLookupValues(productDefinition, "https://example.test/type3-a", "type3-a", [
+      makeLookupEntry({
+        typeId: 3,
+        lookupName: "product",
+        value: "1104",
+        name: "NVIDIA RTX PRO 4500 Blackwell Server Edition",
+        parentTypeId: 2,
+        parentValue: "119",
+        ordinal: 0,
+      }),
+    ], checkedAt);
+
+    const updateResult = repository.replaceLookupValues(
+      productDefinition,
+      "https://example.test/type3-b",
+      "type3-b",
+      [
+        makeLookupEntry({
+          typeId: 3,
+          lookupName: "product",
+          value: "1104",
+          name: "NVIDIA RTX PRO 4500 Blackwell",
+          parentTypeId: 2,
+          parentValue: "119",
+          ordinal: 0,
+        }),
+      ],
+      new Date(Date.now() + 1000).toISOString()
+    );
+
+    assert.equal(updateResult.changed, true);
+    assert.equal(Boolean(updateResult.skippedCoverageRegression), false);
+  } finally {
+    repository.close();
+  }
+
+  const db = openTempDb(rootDir);
+  const productNames = db.prepare(`
+    SELECT name
+    FROM lookup_values
+    WHERE type_id = 3
+    ORDER BY name ASC
+  `).pluck().all();
+  db.close();
+
+  assert.deepEqual(productNames, [
+    "NVIDIA RTX PRO 4500 Blackwell",
   ]);
 });
 
@@ -1296,8 +1407,96 @@ test("refreshLookupValues prints lookup diff diagnostics when a lookup changes",
   }
 
   const diagnosticText = stderr.toString().split("\n--split--\n")[1] || "";
-  assert.match(diagnosticText, /entries: 10 -> 11/);
+  assert.match(diagnosticText, /Lookup TypeID 1 product_type changed\n  entries: 10 -> 11/);
   assert.match(diagnosticText, /added values \(1\) sample: 999=Test Product Type/);
+});
+
+test("refreshLookupValues prints a self-contained preserved lookup block when a weaker product snapshot is rejected", async () => {
+  const rootDir = await makeTempRoot();
+  const repository = await openRepository(rootDir);
+  const stderr = createMemoryStream();
+
+  try {
+    const productDefinition = LOOKUP_TYPE_DEFINITIONS.find((entry) => entry.typeId === 3);
+    const checkedAt = new Date().toISOString();
+
+    repository.replaceLookupValues(productDefinition, "https://example.test/type3-a", "type3-a", [
+      makeLookupEntry({
+        typeId: 3,
+        lookupName: "product",
+        value: "1080",
+        name: "NVIDIA RTX PRO 5000 48GB Blackwell",
+        parentTypeId: 2,
+        parentValue: "132",
+        ordinal: 0,
+      }),
+    ], checkedAt);
+
+    repository.persistFound({
+      id: "999103",
+      release: "595",
+      version: "595.58",
+      displayVersion: "595.58.03",
+      gfeDisplayVersion: "",
+      releaseDateTime: "Tue Mar 24, 2026",
+      osName: "Linux 64-bit",
+      osCode: "linux64",
+      languageName: "English (US)",
+      is64Bit: "1",
+      isWHQL: "0",
+      isRecommended: "1",
+      isDC: "0",
+      isCRD: "0",
+      isBeta: "0",
+      isFeaturePreview: "0",
+      downloadFileSize: "396.81 MB",
+      releaseNotes: "",
+      otherNotes: "",
+      name: "Data Center Driver for Linux",
+      detailsUrl: "https://www.nvidia.com/en-us/drivers/details/999103/",
+      downloadUrl: "https://us.download.nvidia.com/XFree86/Linux-x86_64/595.58.03/NVIDIA-Linux-x86_64-595.58.03.run",
+      seriesNames: ["RTX PRO Blackwell"],
+      productNames: ["NVIDIA RTX PRO 5000 48GB Blackwell"],
+    }, "{}", checkedAt);
+
+    stderr.write("\n--split--\n");
+    const weakerTypeThreeXml = buildLookupValueSearchXml([
+      makeLookupEntry({
+        typeId: 3,
+        lookupName: "product",
+        value: "1080",
+        name: "NVIDIA RTX PRO 5000 Blackwell",
+        parentTypeId: 2,
+        parentValue: "132",
+        ordinal: 0,
+      }),
+    ]);
+
+    const refreshResult = await refreshLookupValues({
+      repository,
+      fetchImpl: createLookupFixtureFetch(async () => {
+        throw new Error("driver fetch should not be called while refreshing lookups");
+      }, {
+        3: weakerTypeThreeXml,
+      }),
+      stderr,
+      sleepImpl: async () => {},
+    });
+
+    assert.equal(refreshResult.exitCode, 0);
+  } finally {
+    repository.close();
+  }
+
+  const diagnosticText = stderr.toString().split("\n--split--\n")[1] || "";
+  assert.match(
+    diagnosticText,
+    /Preserving existing NVIDIA lookup TypeID 3 product snapshot\n  candidate coverage would regress from 1\/1 to 0\/1 found product names\n  entries: 1 -> 1/
+  );
+  assert.match(
+    diagnosticText,
+    /renamed values \(1\) sample: 1080: NVIDIA RTX PRO 5000 48GB Blackwell -> NVIDIA RTX PRO 5000 Blackwell/
+  );
 });
 
 test("crawlDatabase refreshes NVIDIA lookup tables before crawling drivers by default", async () => {
@@ -1315,7 +1514,7 @@ test("crawlDatabase refreshes NVIDIA lookup tables before crawling drivers by de
   });
 
   assert.equal(result.exitCode, 0);
-  assert.match(stdout.toString(), /lookup TypeID 1 product_type updated 10 values/);
+  assert.match(stdout.toString(), /lookup refresh updated 5 types:/);
 
   const db = openTempDb(rootDir);
   const lookupSourceCount = db.prepare("SELECT COUNT(*) AS count FROM lookup_sources").get();
