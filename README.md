@@ -1,5 +1,11 @@
 # nvidia-driver-database
 
+https://binary-person.github.io/nvidia-driver-database/
+
+Nvidia driver data is crawled daily by GitHub Actions cronjob
+
+## Repo information
+
 This repo has two pieces:
 
 - a Node.js crawler in the repo root that builds the master database at `data/nvidia-driver-database.sqlite`

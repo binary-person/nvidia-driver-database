@@ -4,7 +4,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR" || exit 1
 
-GH_REPO="${GH_REPO:-https://github.com/binary-person/nvidia-driver-database}"
+GH_REPO="${GH_REPO:-binary-person/nvidia-driver-database}"
 RELEASE_TAG="${GH_RELEASE_TAG:-database}"
 RELEASE_TITLE="${GH_RELEASE_TITLE:-Database assets}"
 CHANGE_STATUS_FILE="data/.daily-change-status"
@@ -65,6 +65,11 @@ for asset in "${ASSETS[@]}"; do
     exit 1
   fi
 done
+
+if [[ "${GH_ACTIONS:-0}" == "1" ]]; then
+  echo "GH_ACTIONS=1; skipping gh release commands"
+  exit 0
+fi
 
 if ! gh release view "$RELEASE_TAG" "${GH_REPO_ARGS[@]}" >/dev/null 2>&1; then
   echo "creating release $RELEASE_TAG"

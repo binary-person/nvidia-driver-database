@@ -83,6 +83,80 @@ without recrawling NVIDIA.
 If the browser DB artifacts do not exist, the local frontend will show an in-app
 error telling you to run the crawler first and then `node app.js buildbrowserdb`.
 
+## Daily crawl and release setup
+
+The repo includes a daily automation script:
+
+```sh
+./daily.sh
+```
+
+That script currently does all of the following:
+
+- runs `node app.js --concurrency 2 --write-change-status data/.daily-change-status`
+- skips the expensive follow-up steps entirely when the crawl made no real driver or lookup content changes
+- rebuilds `data/browser.sqlite`
+- rewrites `data/browser.sqlite.gz`
+- rewrites `data/browser.sqlite.meta.json`
+- writes a compressed master database at `data/nvidia-driver-database.sqlite.gz`
+- writes a compressed archive of the raw payload directory at `data/data-raw.tar.gz`
+
+The crawler change-status file is:
+
+```text
+data/.daily-change-status
+```
+
+Its contents are:
+
+- `1` when the crawl or prepopulate step changed meaningful driver/lookup content
+- `0` when the run only touched bookkeeping or rechecked already-known rows
+
+When `./daily.sh` sees `0`, it stops before rebuilding the browser DB and before
+any release upload work.
+
+For normal local/manual release publishing, `./daily.sh` also manages the GitHub
+release asset upload itself. By default it targets:
+
+- release tag: `database`
+- release title: `Database assets`
+- repo: `binary-person/nvidia-driver-database`
+
+Those can be overridden with:
+
+```text
+GH_RELEASE_TAG
+GH_RELEASE_TITLE
+GH_REPO
+```
+
+The uploaded release assets are:
+
+```text
+data/browser.sqlite
+data/browser.sqlite.gz
+data/browser.sqlite.meta.json
+data/nvidia-driver-database.sqlite.gz
+data/data-raw.tar.gz
+```
+
+Uploads use `gh release upload --clobber`, so same-named assets are replaced in
+place on each changed run.
+
+If you want the crawl to keep running in a detached local tmux session, use:
+
+```sh
+./run-in-tmux.sh
+```
+
+That launcher starts `./daily.sh` in a tmux session and appends output to:
+
+```text
+tmux.log
+```
+
+with automatic simple log rotation.
+
 ## Frontend setup
 
 Install the frontend dependencies:
@@ -162,6 +236,28 @@ The workflow at `.github/workflows/deploy-frontend.yml`:
 - builds the static SvelteKit app with `GITHUB_PAGES=true`
 - writes `frontend/build/.nojekyll`
 - deploys `frontend/build` to the `gh-pages` branch root
+
+## Scheduled database publishing
+
+The workflow at `.github/workflows/daily-database.yml` handles the scheduled
+database release flow on GitHub Actions:
+
+- runs every day at `23:00 UTC`
+- also supports manual `workflow_dispatch`
+- only runs on `main`
+- uses Node.js `24`
+- restores `data/nvidia-driver-database.sqlite` from the previous release's `nvidia-driver-database.sqlite.gz` when available
+- restores `data-raw/` from the previous release's `data-raw.tar.gz` when available
+- installs root dependencies with `npm ci`
+- runs `./daily.sh` with `GH_ACTIONS=1`
+
+In `GH_ACTIONS=1` mode, `./daily.sh` still performs the crawl/build/archive
+work, but it intentionally skips all `gh release` commands. The workflow then:
+
+- reads `data/.daily-change-status`
+- skips release work entirely when the value is `0`
+- ensures the `database` release exists when the value is `1`
+- uploads the database assets with `--clobber`
 
 ## Out of scope
 

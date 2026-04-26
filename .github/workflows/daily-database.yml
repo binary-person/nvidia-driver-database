@@ -1,0 +1,102 @@
+name: Daily Database
+
+on:
+  schedule:
+    - cron: "0 23 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  daily-database:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    env:
+      GH_ACTIONS: "1"
+      RELEASE_TAG: database
+      RELEASE_TITLE: Database assets
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Restore previous database snapshot
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p data .release-restore
+
+          if gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "restoring prior database assets from release $RELEASE_TAG"
+
+            gh release download "$RELEASE_TAG" \
+              --repo "$GITHUB_REPOSITORY" \
+              --dir .release-restore \
+              --pattern nvidia-driver-database.sqlite.gz || true
+
+            gh release download "$RELEASE_TAG" \
+              --repo "$GITHUB_REPOSITORY" \
+              --dir .release-restore \
+              --pattern data-raw.tar.gz || true
+
+            if [[ -f .release-restore/nvidia-driver-database.sqlite.gz ]]; then
+              gzip -dc .release-restore/nvidia-driver-database.sqlite.gz > data/nvidia-driver-database.sqlite
+            fi
+
+            if [[ -f .release-restore/data-raw.tar.gz ]]; then
+              rm -rf data-raw
+              tar -xzf .release-restore/data-raw.tar.gz
+            fi
+          else
+            echo "no existing $RELEASE_TAG release; starting without a preloaded snapshot"
+          fi
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install crawler dependencies
+        run: npm ci
+
+      - name: Run daily crawl/build/archive
+        run: ./daily.sh
+
+      - name: Read change status
+        id: change_status
+        run: |
+          if [[ -f data/.daily-change-status ]]; then
+            changed="$(tr -d '[:space:]' < data/.daily-change-status)"
+          else
+            changed="0"
+          fi
+          echo "changed=$changed" >> "$GITHUB_OUTPUT"
+
+      - name: Ensure release exists
+        if: steps.change_status.outputs.changed == '1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if ! gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release create "$RELEASE_TAG" \
+              --repo "$GITHUB_REPOSITORY" \
+              --title "$RELEASE_TITLE" \
+              --notes ""
+          fi
+
+      - name: Upload database assets
+        if: steps.change_status.outputs.changed == '1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload "$RELEASE_TAG" \
+            data/browser.sqlite \
+            data/browser.sqlite.gz \
+            data/browser.sqlite.meta.json \
+            data/nvidia-driver-database.sqlite.gz \
+            data/data-raw.tar.gz \
+            --clobber \
+            --repo "$GITHUB_REPOSITORY"
