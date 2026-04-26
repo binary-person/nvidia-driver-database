@@ -469,6 +469,172 @@ test("replaceLookupValues preserves a richer TypeID 3 snapshot when a weaker reg
   ]);
 });
 
+<<<<<<< Updated upstream
+=======
+test("replaceLookupValues preserves richer series, product type, operating system, and language snapshots when candidate coverage regresses", async () => {
+  const rootDir = await makeTempRoot();
+  const repository = await openRepository(rootDir);
+
+  try {
+    const productTypeDefinition = LOOKUP_TYPE_DEFINITIONS.find((entry) => entry.typeId === 1);
+    const seriesDefinition = LOOKUP_TYPE_DEFINITIONS.find((entry) => entry.typeId === 2);
+    const osDefinition = LOOKUP_TYPE_DEFINITIONS.find((entry) => entry.typeId === 4);
+    const languageDefinition = LOOKUP_TYPE_DEFINITIONS.find((entry) => entry.typeId === 5);
+    const checkedAt = new Date().toISOString();
+
+    repository.replaceLookupValues(productTypeDefinition, "https://example.test/type1-a", "type1-a", [
+      makeLookupEntry({
+        typeId: 1,
+        lookupName: "product_type",
+        value: "1",
+        name: "RTX PRO",
+        ordinal: 0,
+      }),
+    ], checkedAt);
+    repository.replaceLookupValues(seriesDefinition, "https://example.test/type2-a", "type2-a", [
+      makeLookupEntry({
+        typeId: 2,
+        lookupName: "product_series",
+        value: "2",
+        name: "RTX PRO Blackwell",
+        parentTypeId: 1,
+        parentValue: "1",
+        ordinal: 0,
+      }),
+    ], checkedAt);
+    repository.replaceLookupValues(osDefinition, "https://example.test/type4-a", "type4-a", [
+      makeLookupEntry({
+        typeId: 4,
+        lookupName: "operating_system",
+        value: "4",
+        name: "Linux 64-bit",
+        code: "linux64",
+        ordinal: 0,
+      }),
+    ], checkedAt);
+    repository.replaceLookupValues(languageDefinition, "https://example.test/type5-a", "type5-a", [
+      makeLookupEntry({
+        typeId: 5,
+        lookupName: "language",
+        value: "5",
+        name: "English (US)",
+        ordinal: 0,
+      }),
+    ], checkedAt);
+
+    repository.persistFound({
+      id: "999102",
+      release: "595",
+      version: "595.58",
+      displayVersion: "595.58.03",
+      gfeDisplayVersion: "",
+      releaseDateTime: "Tue Mar 24, 2026",
+      osName: "Linux 64-bit",
+      osCode: "linux64",
+      languageName: "English (US)",
+      is64Bit: "1",
+      isWHQL: "0",
+      isRecommended: "1",
+      isDC: "0",
+      isCRD: "0",
+      isBeta: "0",
+      isFeaturePreview: "0",
+      downloadFileSize: "396.81 MB",
+      releaseNotes: "",
+      otherNotes: "",
+      name: "Data Center Driver for Linux",
+      detailsUrl: "https://www.nvidia.com/en-us/drivers/details/999102/",
+      downloadUrl: "https://us.download.nvidia.com/XFree86/Linux-x86_64/595.58.03/NVIDIA-Linux-x86_64-595.58.03.run",
+      seriesNames: ["RTX PRO Blackwell"],
+      productNames: [],
+    }, "{}", checkedAt);
+
+    const type1Regression = repository.replaceLookupValues(productTypeDefinition, "https://example.test/type1-b", "type1-b", [
+      makeLookupEntry({
+        typeId: 1,
+        lookupName: "product_type",
+        value: "9",
+        name: "Legacy RTX",
+        ordinal: 0,
+      }),
+    ], new Date(Date.now() + 1000).toISOString());
+    const type2Regression = repository.replaceLookupValues(seriesDefinition, "https://example.test/type2-b", "type2-b", [
+      makeLookupEntry({
+        typeId: 2,
+        lookupName: "product_series",
+        value: "2",
+        name: "RTX PRO",
+        parentTypeId: 1,
+        parentValue: "1",
+        ordinal: 0,
+      }),
+    ], new Date(Date.now() + 2000).toISOString());
+    const type4Regression = repository.replaceLookupValues(osDefinition, "https://example.test/type4-b", "type4-b", [
+      makeLookupEntry({
+        typeId: 4,
+        lookupName: "operating_system",
+        value: "4",
+        name: "Linux",
+        code: "linux",
+        ordinal: 0,
+      }),
+    ], new Date(Date.now() + 3000).toISOString());
+    const type5Regression = repository.replaceLookupValues(languageDefinition, "https://example.test/type5-b", "type5-b", [
+      makeLookupEntry({
+        typeId: 5,
+        lookupName: "language",
+        value: "5",
+        name: "English",
+        ordinal: 0,
+      }),
+    ], new Date(Date.now() + 4000).toISOString());
+
+    assert.equal(type1Regression.changed, false);
+    assert.equal(type1Regression.skippedCoverageRegression, true);
+    assert.equal(type2Regression.changed, false);
+    assert.equal(type2Regression.skippedCoverageRegression, true);
+    assert.equal(type4Regression.changed, false);
+    assert.equal(type4Regression.skippedCoverageRegression, true);
+    assert.equal(type5Regression.changed, false);
+    assert.equal(type5Regression.skippedCoverageRegression, true);
+  } finally {
+    repository.close();
+  }
+
+  const db = openTempDb(rootDir);
+  const type1Names = db.prepare(`
+    SELECT name
+    FROM lookup_values
+    WHERE type_id = 1
+    ORDER BY name ASC
+  `).pluck().all();
+  const type2Names = db.prepare(`
+    SELECT name
+    FROM lookup_values
+    WHERE type_id = 2
+    ORDER BY name ASC
+  `).pluck().all();
+  const type4Names = db.prepare(`
+    SELECT name
+    FROM lookup_values
+    WHERE type_id = 4
+    ORDER BY name ASC
+  `).pluck().all();
+  const type5Names = db.prepare(`
+    SELECT name
+    FROM lookup_values
+    WHERE type_id = 5
+    ORDER BY name ASC
+  `).pluck().all();
+  db.close();
+
+  assert.deepEqual(type1Names, ["RTX PRO"]);
+  assert.deepEqual(type2Names, ["RTX PRO Blackwell"]);
+  assert.deepEqual(type4Names, ["Linux 64-bit"]);
+  assert.deepEqual(type5Names, ["English (US)"]);
+});
+
+>>>>>>> Stashed changes
 test("buildBrowserDatabase rebuilds data/browser.sqlite from the master database", async () => {
   const rootDir = await makeTempRoot();
   const foundOld = await readAjaxExample("2.json");
@@ -1090,6 +1256,52 @@ test("refreshLookupValues ignores lookup entry reorder-only changes", async () =
   } finally {
     repository.close();
   }
+});
+
+test("refreshLookupValues prints lookup diff diagnostics when a lookup changes", async () => {
+  const rootDir = await makeTempRoot();
+  const repository = await openRepository(rootDir);
+  const stderr = createMemoryStream();
+
+  try {
+    const firstRefresh = await refreshLookupValues({
+      repository,
+      fetchImpl: createLookupFixtureFetch(async () => {
+        throw new Error("driver fetch should not be called while refreshing lookups");
+      }),
+      stderr,
+      sleepImpl: async () => {},
+    });
+
+    assert.equal(firstRefresh.exitCode, 0);
+    stderr.write("\n--split--\n");
+
+    const typeOneXml = await readLookupExample(1);
+    const mutatedTypeOneXml = typeOneXml.replace(
+      "</LookupValues>",
+      "<LookupValue><Name>Test Product Type</Name><Value>999</Value></LookupValue></LookupValues>"
+    );
+
+    const secondRefresh = await refreshLookupValues({
+      repository,
+      fetchImpl: createLookupFixtureFetch(async () => {
+        throw new Error("driver fetch should not be called while refreshing lookups");
+      }, {
+        1: mutatedTypeOneXml,
+      }),
+      stderr,
+      sleepImpl: async () => {},
+    });
+
+    assert.equal(secondRefresh.exitCode, 0);
+    assert.deepEqual(secondRefresh.changedTypes.map((entry) => entry.typeId), [1]);
+  } finally {
+    repository.close();
+  }
+
+  const diagnosticText = stderr.toString().split("\n--split--\n")[1] || "";
+  assert.match(diagnosticText, /entries: 10 -> 11/);
+  assert.match(diagnosticText, /added values \(1\) sample: 999=Test Product Type/);
 });
 
 test("crawlDatabase refreshes NVIDIA lookup tables before crawling drivers by default", async () => {
