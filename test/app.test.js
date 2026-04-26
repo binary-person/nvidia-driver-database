@@ -360,6 +360,115 @@ test("buildBrowserDatabase resolves known product aliases to canonical lookup na
   assert.equal(driverRow.series_lookup_ids_text.length > 0, true);
 });
 
+test("replaceLookupValues preserves a richer TypeID 3 snapshot when a weaker regional snapshot would reduce found-product coverage", async () => {
+  const rootDir = await makeTempRoot();
+  const repository = await openRepository(rootDir);
+
+  try {
+    const productDefinition = LOOKUP_TYPE_DEFINITIONS.find((entry) => entry.typeId === 3);
+    const checkedAt = new Date().toISOString();
+
+    repository.persistFound({
+      id: "999101",
+      release: "595",
+      version: "595.45",
+      displayVersion: "595.45.04",
+      gfeDisplayVersion: "",
+      releaseDateTime: "Thu Mar 5, 2026",
+      osName: "Linux 64-bit",
+      osCode: "linux64",
+      languageName: "English (US)",
+      is64Bit: "1",
+      isWHQL: "0",
+      isRecommended: "1",
+      isDC: "0",
+      isCRD: "0",
+      isBeta: "0",
+      isFeaturePreview: "0",
+      downloadFileSize: "423.19 MB",
+      releaseNotes: "",
+      otherNotes: "",
+      name: "Data Center Driver for Linux",
+      detailsUrl: "https://www.nvidia.com/en-us/drivers/details/999101/",
+      downloadUrl: "https://us.download.nvidia.com/XFree86/Linux-x86_64/595.45.04/NVIDIA-Linux-x86_64-595.45.04.run",
+      seriesNames: ["RTX PRO Blackwell"],
+      productNames: [
+        "NVIDIA RTX PRO 5000 48GB Blackwell",
+        "NVIDIA RTX PRO 4500 Blackwell Workstation Edition",
+      ],
+    }, "{}", checkedAt);
+
+    repository.replaceLookupValues(productDefinition, "https://example.test/type3-a", "type3-a", [
+      makeLookupEntry({
+        typeId: 3,
+        lookupName: "product",
+        value: "1080",
+        name: "NVIDIA RTX PRO 5000 48GB Blackwell",
+        parentTypeId: 2,
+        parentValue: "132",
+        ordinal: 0,
+      }),
+      makeLookupEntry({
+        typeId: 3,
+        lookupName: "product",
+        value: "1082",
+        name: "NVIDIA RTX PRO 4500 Blackwell Workstation Edition",
+        parentTypeId: 2,
+        parentValue: "132",
+        ordinal: 1,
+      }),
+    ], checkedAt);
+
+    const regressionResult = repository.replaceLookupValues(
+      productDefinition,
+      "https://example.test/type3-b",
+      "type3-b",
+      [
+        makeLookupEntry({
+          typeId: 3,
+          lookupName: "product",
+          value: "1080",
+          name: "NVIDIA RTX PRO 5000 Blackwell",
+          parentTypeId: 2,
+          parentValue: "132",
+          ordinal: 0,
+        }),
+        makeLookupEntry({
+          typeId: 3,
+          lookupName: "product",
+          value: "1082",
+          name: "NVIDIA RTX PRO 4500 Blackwell",
+          parentTypeId: 2,
+          parentValue: "132",
+          ordinal: 1,
+        }),
+      ],
+      new Date(Date.now() + 1000).toISOString()
+    );
+
+    assert.equal(regressionResult.changed, false);
+    assert.equal(regressionResult.skippedCoverageRegression, true);
+    assert.equal(regressionResult.retainedCoverageCount, 2);
+    assert.equal(regressionResult.candidateCoverageCount, 0);
+  } finally {
+    repository.close();
+  }
+
+  const db = openTempDb(rootDir);
+  const productNames = db.prepare(`
+    SELECT name
+    FROM lookup_values
+    WHERE type_id = 3
+    ORDER BY name ASC
+  `).pluck().all();
+  db.close();
+
+  assert.deepEqual(productNames, [
+    "NVIDIA RTX PRO 4500 Blackwell Workstation Edition",
+    "NVIDIA RTX PRO 5000 48GB Blackwell",
+  ]);
+});
+
 test("buildBrowserDatabase rebuilds data/browser.sqlite from the master database", async () => {
   const rootDir = await makeTempRoot();
   const foundOld = await readAjaxExample("2.json");
