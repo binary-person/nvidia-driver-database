@@ -469,8 +469,6 @@ test("replaceLookupValues preserves a richer TypeID 3 snapshot when a weaker reg
   ]);
 });
 
-<<<<<<< Updated upstream
-=======
 test("replaceLookupValues preserves richer series, product type, operating system, and language snapshots when candidate coverage regresses", async () => {
   const rootDir = await makeTempRoot();
   const repository = await openRepository(rootDir);
@@ -633,8 +631,6 @@ test("replaceLookupValues preserves richer series, product type, operating syste
   assert.deepEqual(type4Names, ["Linux 64-bit"]);
   assert.deepEqual(type5Names, ["English (US)"]);
 });
-
->>>>>>> Stashed changes
 test("buildBrowserDatabase rebuilds data/browser.sqlite from the master database", async () => {
   const rootDir = await makeTempRoot();
   const foundOld = await readAjaxExample("2.json");
