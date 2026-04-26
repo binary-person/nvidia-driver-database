@@ -386,21 +386,76 @@ test("buildBrowserDatabase resolves known product aliases to canonical lookup na
   assert.equal(driverRow.series_lookup_ids_text.length > 0, true);
 });
 
-test("replaceLookupValues preserves a richer TypeID 3 snapshot when a weaker regional snapshot would reduce found-product coverage", async () => {
+test("buildBrowserDatabase accepts exact richer product lookup rows without requiring the canonical alias target", async () => {
   const rootDir = await makeTempRoot();
   const repository = await openRepository(rootDir);
 
   try {
+    const productTypeDefinition = LOOKUP_TYPE_DEFINITIONS.find((entry) => entry.typeId === 1);
+    const seriesDefinition = LOOKUP_TYPE_DEFINITIONS.find((entry) => entry.typeId === 2);
     const productDefinition = LOOKUP_TYPE_DEFINITIONS.find((entry) => entry.typeId === 3);
+    const osDefinition = LOOKUP_TYPE_DEFINITIONS.find((entry) => entry.typeId === 4);
+    const languageDefinition = LOOKUP_TYPE_DEFINITIONS.find((entry) => entry.typeId === 5);
     const checkedAt = new Date().toISOString();
 
+    repository.replaceLookupValues(productTypeDefinition, "https://example.test/type1", "type1", [
+      makeLookupEntry({
+        typeId: 1,
+        lookupName: "product_type",
+        value: "1",
+        name: "RTX PRO",
+        ordinal: 0,
+      }),
+    ], checkedAt);
+    repository.replaceLookupValues(seriesDefinition, "https://example.test/type2", "type2", [
+      makeLookupEntry({
+        typeId: 2,
+        lookupName: "product_series",
+        value: "132",
+        name: "RTX PRO Blackwell",
+        parentTypeId: 1,
+        parentValue: "1",
+        ordinal: 0,
+      }),
+    ], checkedAt);
+    repository.replaceLookupValues(productDefinition, "https://example.test/type3", "type3", [
+      makeLookupEntry({
+        typeId: 3,
+        lookupName: "product",
+        value: "1102",
+        name: "NVIDIA RTX PRO 5000 72GB Blackwell",
+        parentTypeId: 2,
+        parentValue: "132",
+        ordinal: 0,
+      }),
+    ], checkedAt);
+    repository.replaceLookupValues(osDefinition, "https://example.test/type4", "type4", [
+      makeLookupEntry({
+        typeId: 4,
+        lookupName: "operating_system",
+        value: "4",
+        name: "Linux 64-bit",
+        code: "linux64",
+        ordinal: 0,
+      }),
+    ], checkedAt);
+    repository.replaceLookupValues(languageDefinition, "https://example.test/type5", "type5", [
+      makeLookupEntry({
+        typeId: 5,
+        lookupName: "language",
+        value: "5",
+        name: "English (US)",
+        ordinal: 0,
+      }),
+    ], checkedAt);
+
     repository.persistFound({
-      id: "999101",
+      id: "999002",
       release: "595",
-      version: "595.45",
-      displayVersion: "595.45.04",
+      version: "595.58",
+      displayVersion: "595.58.03",
       gfeDisplayVersion: "",
-      releaseDateTime: "Thu Mar 5, 2026",
+      releaseDateTime: "Tue Mar 24, 2026",
       osName: "Linux 64-bit",
       osCode: "linux64",
       languageName: "English (US)",
@@ -411,18 +466,50 @@ test("replaceLookupValues preserves a richer TypeID 3 snapshot when a weaker reg
       isCRD: "0",
       isBeta: "0",
       isFeaturePreview: "0",
-      downloadFileSize: "423.19 MB",
+      downloadFileSize: "396.81 MB",
       releaseNotes: "",
       otherNotes: "",
       name: "Data Center Driver for Linux",
-      detailsUrl: "https://www.nvidia.com/en-us/drivers/details/999101/",
-      downloadUrl: "https://us.download.nvidia.com/XFree86/Linux-x86_64/595.45.04/NVIDIA-Linux-x86_64-595.45.04.run",
+      detailsUrl: "https://www.nvidia.com/en-us/drivers/details/999002/",
+      downloadUrl: "https://us.download.nvidia.com/XFree86/Linux-x86_64/595.58.03/NVIDIA-Linux-x86_64-595.58.03.run",
       seriesNames: ["RTX PRO Blackwell"],
-      productNames: [
-        "NVIDIA RTX PRO 5000 48GB Blackwell",
-        "NVIDIA RTX PRO 4500 Blackwell Workstation Edition",
-      ],
+      productNames: ["NVIDIA RTX PRO 5000 72GB Blackwell"],
     }, "{}", checkedAt);
+  } finally {
+    repository.close();
+  }
+
+  const result = await buildBrowserDatabase({
+    rootDir,
+    stdout: createMemoryStream(),
+  });
+
+  assert.equal(result.exitCode, 0);
+
+  const db = openBrowserDb(rootDir);
+  const driverRow = db.prepare(`
+    SELECT product_lookup_ids_text
+    FROM drivers
+    WHERE id = 999002
+  `).get();
+  const productLookup = db.prepare(`
+    SELECT lookup_id
+    FROM lookup_values
+    WHERE type_id = 3
+      AND name = 'NVIDIA RTX PRO 5000 72GB Blackwell'
+  `).get();
+  db.close();
+
+  assert.equal(driverRow.product_lookup_ids_text, `|${productLookup.lookup_id}|`);
+});
+
+test("replaceLookupValues keeps existing TypeID 3 rows when a candidate omits or weakens them", async () => {
+  const rootDir = await makeTempRoot();
+  const repository = await openRepository(rootDir);
+
+  try {
+    const productDefinition = LOOKUP_TYPE_DEFINITIONS.find((entry) => entry.typeId === 3);
+    const checkedAt = new Date().toISOString();
 
     repository.replaceLookupValues(productDefinition, "https://example.test/type3-a", "type3-a", [
       makeLookupEntry({
@@ -445,7 +532,7 @@ test("replaceLookupValues preserves a richer TypeID 3 snapshot when a weaker reg
       }),
     ], checkedAt);
 
-    const regressionResult = repository.replaceLookupValues(
+    const mergeResult = repository.replaceLookupValues(
       productDefinition,
       "https://example.test/type3-b",
       "type3-b",
@@ -459,23 +546,14 @@ test("replaceLookupValues preserves a richer TypeID 3 snapshot when a weaker reg
           parentValue: "132",
           ordinal: 0,
         }),
-        makeLookupEntry({
-          typeId: 3,
-          lookupName: "product",
-          value: "1082",
-          name: "NVIDIA RTX PRO 4500 Blackwell",
-          parentTypeId: 2,
-          parentValue: "132",
-          ordinal: 1,
-        }),
       ],
       new Date(Date.now() + 1000).toISOString()
     );
 
-    assert.equal(regressionResult.changed, false);
-    assert.equal(regressionResult.skippedCoverageRegression, true);
-    assert.equal(regressionResult.retainedCoverageCount, 2);
-    assert.equal(regressionResult.candidateCoverageCount, 0);
+    assert.equal(mergeResult.changed, false);
+    assert.equal(mergeResult.insertedCount, 0);
+    assert.equal(mergeResult.preservedOmittedCount, 1);
+    assert.equal(mergeResult.preservedChangedCount, 1);
   } finally {
     repository.close();
   }
@@ -495,65 +573,46 @@ test("replaceLookupValues preserves a richer TypeID 3 snapshot when a weaker reg
   ]);
 });
 
-test("replaceLookupValues treats NVIDIA RTX PRO 4500 Blackwell Server Edition as equivalent to its canonical generic name during coverage checks", async () => {
+test("replaceLookupValues applies same-value manual overrides only when configured", async () => {
   const rootDir = await makeTempRoot();
-  const repository = await openRepository(rootDir);
+  const productTypeDefinition = LOOKUP_TYPE_DEFINITIONS.find((entry) => entry.typeId === 1);
+  const checkedAt = new Date().toISOString();
+  const seedRepository = await openRepository(rootDir);
 
   try {
-    const productDefinition = LOOKUP_TYPE_DEFINITIONS.find((entry) => entry.typeId === 3);
-    const checkedAt = new Date().toISOString();
-
-    repository.persistFound({
-      id: "999100",
-      release: "595",
-      version: "595.45",
-      displayVersion: "595.45.04",
-      gfeDisplayVersion: "",
-      releaseDateTime: "Thu Mar 5, 2026",
-      osName: "Linux 64-bit",
-      osCode: "linux64",
-      languageName: "English (US)",
-      is64Bit: "1",
-      isWHQL: "0",
-      isRecommended: "1",
-      isDC: "0",
-      isCRD: "0",
-      isBeta: "0",
-      isFeaturePreview: "0",
-      downloadFileSize: "423.19 MB",
-      releaseNotes: "",
-      otherNotes: "",
-      name: "Data Center Driver for Linux",
-      detailsUrl: "https://www.nvidia.com/en-us/drivers/details/999100/",
-      downloadUrl: "https://us.download.nvidia.com/XFree86/Linux-x86_64/595.45.04/NVIDIA-Linux-x86_64-595.45.04.run",
-      seriesNames: ["RTX PRO Blackwell"],
-      productNames: ["NVIDIA RTX PRO 4500 Blackwell Server Edition"],
-    }, "{}", checkedAt);
-
-    repository.replaceLookupValues(productDefinition, "https://example.test/type3-a", "type3-a", [
+    seedRepository.replaceLookupValues(productTypeDefinition, "https://example.test/type1-a", "type1-a", [
       makeLookupEntry({
-        typeId: 3,
-        lookupName: "product",
-        value: "1104",
-        name: "NVIDIA RTX PRO 4500 Blackwell Server Edition",
-        parentTypeId: 2,
-        parentValue: "119",
+        typeId: 1,
+        lookupName: "product_type",
+        value: "1",
+        name: "RTX PRO",
         ordinal: 0,
       }),
     ], checkedAt);
+  } finally {
+    seedRepository.close();
+  }
+
+  const repository = await openRepository(rootDir, undefined, {
+    lookupRowManualOverrides: {
+      "1:1": {
+        name: "RTX PRO Override",
+      },
+    },
+  });
+
+  try {
 
     const updateResult = repository.replaceLookupValues(
-      productDefinition,
-      "https://example.test/type3-b",
-      "type3-b",
+      productTypeDefinition,
+      "https://example.test/type1-b",
+      "type1-b",
       [
         makeLookupEntry({
-          typeId: 3,
-          lookupName: "product",
-          value: "1104",
-          name: "NVIDIA RTX PRO 4500 Blackwell",
-          parentTypeId: 2,
-          parentValue: "119",
+          typeId: 1,
+          lookupName: "product_type",
+          value: "1",
+          name: "RTX PRO",
           ordinal: 0,
         }),
       ],
@@ -561,26 +620,26 @@ test("replaceLookupValues treats NVIDIA RTX PRO 4500 Blackwell Server Edition as
     );
 
     assert.equal(updateResult.changed, true);
-    assert.equal(Boolean(updateResult.skippedCoverageRegression), false);
+    assert.equal(updateResult.overrideAppliedCount, 1);
   } finally {
     repository.close();
   }
 
   const db = openTempDb(rootDir);
-  const productNames = db.prepare(`
+  const productTypeNames = db.prepare(`
     SELECT name
     FROM lookup_values
-    WHERE type_id = 3
+    WHERE type_id = 1
     ORDER BY name ASC
   `).pluck().all();
   db.close();
 
-  assert.deepEqual(productNames, [
-    "NVIDIA RTX PRO 4500 Blackwell",
+  assert.deepEqual(productTypeNames, [
+    "RTX PRO Override",
   ]);
 });
 
-test("replaceLookupValues preserves richer series, product type, operating system, and language snapshots when candidate coverage regresses", async () => {
+test("replaceLookupValues preserves same-value changes for product type, series, operating system, and language by default", async () => {
   const rootDir = await makeTempRoot();
   const repository = await openRepository(rootDir);
 
@@ -631,43 +690,16 @@ test("replaceLookupValues preserves richer series, product type, operating syste
       }),
     ], checkedAt);
 
-    repository.persistFound({
-      id: "999102",
-      release: "595",
-      version: "595.58",
-      displayVersion: "595.58.03",
-      gfeDisplayVersion: "",
-      releaseDateTime: "Tue Mar 24, 2026",
-      osName: "Linux 64-bit",
-      osCode: "linux64",
-      languageName: "English (US)",
-      is64Bit: "1",
-      isWHQL: "0",
-      isRecommended: "1",
-      isDC: "0",
-      isCRD: "0",
-      isBeta: "0",
-      isFeaturePreview: "0",
-      downloadFileSize: "396.81 MB",
-      releaseNotes: "",
-      otherNotes: "",
-      name: "Data Center Driver for Linux",
-      detailsUrl: "https://www.nvidia.com/en-us/drivers/details/999102/",
-      downloadUrl: "https://us.download.nvidia.com/XFree86/Linux-x86_64/595.58.03/NVIDIA-Linux-x86_64-595.58.03.run",
-      seriesNames: ["RTX PRO Blackwell"],
-      productNames: [],
-    }, "{}", checkedAt);
-
-    const type1Regression = repository.replaceLookupValues(productTypeDefinition, "https://example.test/type1-b", "type1-b", [
+    const type1Result = repository.replaceLookupValues(productTypeDefinition, "https://example.test/type1-b", "type1-b", [
       makeLookupEntry({
         typeId: 1,
         lookupName: "product_type",
-        value: "9",
+        value: "1",
         name: "Legacy RTX",
         ordinal: 0,
       }),
     ], new Date(Date.now() + 1000).toISOString());
-    const type2Regression = repository.replaceLookupValues(seriesDefinition, "https://example.test/type2-b", "type2-b", [
+    const type2Result = repository.replaceLookupValues(seriesDefinition, "https://example.test/type2-b", "type2-b", [
       makeLookupEntry({
         typeId: 2,
         lookupName: "product_series",
@@ -678,7 +710,7 @@ test("replaceLookupValues preserves richer series, product type, operating syste
         ordinal: 0,
       }),
     ], new Date(Date.now() + 2000).toISOString());
-    const type4Regression = repository.replaceLookupValues(osDefinition, "https://example.test/type4-b", "type4-b", [
+    const type4Result = repository.replaceLookupValues(osDefinition, "https://example.test/type4-b", "type4-b", [
       makeLookupEntry({
         typeId: 4,
         lookupName: "operating_system",
@@ -688,7 +720,7 @@ test("replaceLookupValues preserves richer series, product type, operating syste
         ordinal: 0,
       }),
     ], new Date(Date.now() + 3000).toISOString());
-    const type5Regression = repository.replaceLookupValues(languageDefinition, "https://example.test/type5-b", "type5-b", [
+    const type5Result = repository.replaceLookupValues(languageDefinition, "https://example.test/type5-b", "type5-b", [
       makeLookupEntry({
         typeId: 5,
         lookupName: "language",
@@ -698,14 +730,14 @@ test("replaceLookupValues preserves richer series, product type, operating syste
       }),
     ], new Date(Date.now() + 4000).toISOString());
 
-    assert.equal(type1Regression.changed, false);
-    assert.equal(type1Regression.skippedCoverageRegression, true);
-    assert.equal(type2Regression.changed, false);
-    assert.equal(type2Regression.skippedCoverageRegression, true);
-    assert.equal(type4Regression.changed, false);
-    assert.equal(type4Regression.skippedCoverageRegression, true);
-    assert.equal(type5Regression.changed, false);
-    assert.equal(type5Regression.skippedCoverageRegression, true);
+    assert.equal(type1Result.changed, false);
+    assert.equal(type1Result.preservedChangedCount, 1);
+    assert.equal(type2Result.changed, false);
+    assert.equal(type2Result.preservedChangedCount, 1);
+    assert.equal(type4Result.changed, false);
+    assert.equal(type4Result.preservedChangedCount, 1);
+    assert.equal(type5Result.changed, false);
+    assert.equal(type5Result.preservedChangedCount, 1);
   } finally {
     repository.close();
   }
@@ -1407,11 +1439,11 @@ test("refreshLookupValues prints lookup diff diagnostics when a lookup changes",
   }
 
   const diagnosticText = stderr.toString().split("\n--split--\n")[1] || "";
-  assert.match(diagnosticText, /Lookup TypeID 1 product_type changed\n  entries: 10 -> 11/);
-  assert.match(diagnosticText, /added values \(1\) sample: 999=Test Product Type/);
+  assert.match(diagnosticText, /Lookup TypeID 1 product_type merged\n  entries: existing 10, candidate 11, stored 11/);
+  assert.match(diagnosticText, /inserted values \(1\) sample: 999=Test Product Type/);
 });
 
-test("refreshLookupValues prints a self-contained preserved lookup block when a weaker product snapshot is rejected", async () => {
+test("refreshLookupValues prints a self-contained preserved lookup block when a candidate weakens an existing product row", async () => {
   const rootDir = await makeTempRoot();
   const repository = await openRepository(rootDir);
   const stderr = createMemoryStream();
@@ -1491,11 +1523,11 @@ test("refreshLookupValues prints a self-contained preserved lookup block when a 
   const diagnosticText = stderr.toString().split("\n--split--\n")[1] || "";
   assert.match(
     diagnosticText,
-    /Preserving existing NVIDIA lookup TypeID 3 product snapshot\n  candidate coverage would regress from 1\/1 to 0\/1 found product names\n  entries: 1 -> 1/
+    /Lookup TypeID 3 product preserved existing rows\n  entries: existing 1, candidate 1, stored 1/
   );
   assert.match(
     diagnosticText,
-    /renamed values \(1\) sample: 1080: NVIDIA RTX PRO 5000 48GB Blackwell -> NVIDIA RTX PRO 5000 Blackwell/
+    /same-value name changes \(1\) sample: 1080: NVIDIA RTX PRO 5000 48GB Blackwell -> NVIDIA RTX PRO 5000 Blackwell/
   );
 });
 
@@ -1514,7 +1546,7 @@ test("crawlDatabase refreshes NVIDIA lookup tables before crawling drivers by de
   });
 
   assert.equal(result.exitCode, 0);
-  assert.match(stdout.toString(), /lookup refresh updated 5 types:/);
+  assert.match(stdout.toString(), /lookup refresh: inserted values in 5 types:/);
 
   const db = openTempDb(rootDir);
   const lookupSourceCount = db.prepare("SELECT COUNT(*) AS count FROM lookup_sources").get();
