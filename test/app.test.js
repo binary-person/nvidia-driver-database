@@ -2146,6 +2146,63 @@ test("runCli retries timed out requests and exits after the retry limit", async 
   assert.equal((stderrText.match(/Request timed out after 1ms for driver ID 2/g) || []).length, 3);
 });
 
+test("runCli retries network fetch failures and exits after the retry limit", async () => {
+  const rootDir = await makeTempRoot();
+  const stdout = createMemoryStream();
+  const stderr = createMemoryStream();
+  const retryDelays = [];
+  let requestCount = 0;
+
+  const exitCode = await runCli(["3", "--retries", "2", "--concurrency", "1"], {
+    rootDir,
+    refreshLookups: false,
+    stdout,
+    stderr,
+    sleepImpl: async (delayMs) => {
+      retryDelays.push(delayMs);
+    },
+    fetchImpl: async () => {
+      requestCount += 1;
+      const cause = new Error("read ECONNRESET");
+      cause.code = "ECONNRESET";
+      throw new TypeError("fetch failed", { cause });
+    },
+  });
+
+  const stderrText = stderr.toString();
+  assert.equal(exitCode, 1);
+  assert.equal(requestCount, 3);
+  assert.deepEqual(retryDelays, [1000, 2000]);
+  assert.match(stderrText, /Request failure for driver ID 2; retry 1\/2 in 1s/);
+  assert.match(stderrText, /Request failure for driver ID 2; retry 2\/2 in 2s/);
+  assert.equal((stderrText.match(/Caused by: Error: read ECONNRESET/g) || []).length, 3);
+});
+
+test("runCli recovers when a network fetch failure succeeds on retry", async () => {
+  const rootDir = await makeTempRoot();
+  const stdout = createMemoryStream();
+  const stderr = createMemoryStream();
+  let failedOnce = false;
+
+  const exitCode = await runCli(["2", "--concurrency", "1"], {
+    rootDir,
+    refreshLookups: false,
+    stdout,
+    stderr,
+    sleepImpl: async () => {},
+    fetchImpl: async () => {
+      if (!failedOnce) {
+        failedOnce = true;
+        throw new TypeError("fetch failed");
+      }
+      return createResponse(200, (await readAjaxExample("1 not found.json")).text);
+    },
+  });
+
+  assert.equal(exitCode, 0);
+  assert.match(stderr.toString(), /Request failure for driver ID 2; retry 1\/6 in 1s/);
+});
+
 test("parseCrawlArgs supports named crawl flags and the legacy positional max value", async () => {
   assert.deepEqual(parseCrawlArgs(["--max-trailing-not-found", "15", "--concurrency", "4"]), {
     maxTrailingNotFound: 15,
