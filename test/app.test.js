@@ -639,6 +639,67 @@ test("replaceLookupValues applies same-value manual overrides only when configur
   ]);
 });
 
+test("replaceLookupValues accepts a same-value upstream change when an override matches it", async () => {
+  const rootDir = await makeTempRoot();
+  const productTypeDefinition = LOOKUP_TYPE_DEFINITIONS.find((entry) => entry.typeId === 1);
+  const seedRepository = await openRepository(rootDir, undefined, { lookupRowManualOverrides: {} });
+
+  try {
+    seedRepository.replaceLookupValues(productTypeDefinition, "https://example.test/type1-a", "type1-a", [
+      makeLookupEntry({
+        typeId: 1,
+        lookupName: "product_type",
+        value: "13",
+        name: "RTX TMP",
+        ordinal: 0,
+      }),
+    ], new Date().toISOString());
+  } finally {
+    seedRepository.close();
+  }
+
+  const repository = await openRepository(rootDir, undefined, {
+    lookupRowManualOverrides: {
+      "1:13": {
+        name: "RTX Spark",
+      },
+    },
+  });
+
+  try {
+    const updateResult = repository.replaceLookupValues(
+      productTypeDefinition,
+      "https://example.test/type1-b",
+      "type1-b",
+      [
+        makeLookupEntry({
+          typeId: 1,
+          lookupName: "product_type",
+          value: "13",
+          name: "RTX Spark",
+          ordinal: 0,
+        }),
+      ],
+      new Date(Date.now() + 1000).toISOString()
+    );
+
+    assert.equal(updateResult.changed, true);
+    assert.equal(updateResult.overrideAppliedCount, 1);
+  } finally {
+    repository.close();
+  }
+
+  const db = openTempDb(rootDir);
+  const productTypeNames = db.prepare(`
+    SELECT name
+    FROM lookup_values
+    WHERE type_id = 1
+  `).pluck().all();
+  db.close();
+
+  assert.deepEqual(productTypeNames, ["RTX Spark"]);
+});
+
 test("replaceLookupValues preserves same-value changes for product type, series, operating system, and language by default", async () => {
   const rootDir = await makeTempRoot();
   const repository = await openRepository(rootDir);
